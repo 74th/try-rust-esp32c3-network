@@ -1,5 +1,5 @@
 [package]
-name = "try-rust-espc3-network"
+name = "try-rust-esp32c3-network"
 version = "0.1.0"
 authors = ["Atsushi Morimoto (74th) <74th.tech@gmail.com>"]
 edition = "2021"
@@ -9,15 +9,34 @@ resolver = "2"
 opt-level = "s"
 
 [profile.dev]
-debug = true # Symbols are nice and they don't increase the size on Flash
+debug = true    # Symbols are nice and they don't increase the size on Flash
 opt-level = "z"
 
 [features]
 pio = ["esp-idf-sys/pio"]
 
 [dependencies]
-esp-idf-sys = { version = "0.31.11", features = ["binstart"] }
+anyhow = "1"
+array-macro = "2.1.5"
+embedded-hal = "1.0.0-alpha.9"
+embedded-svc = { version = "0.24.0", features = ["experimental"] }
+esp-backtrace = { version = "0.4.0", features = ["esp32c3"] }
+esp-idf-hal = "0.40.1"
+# esp-idf-sys = { version = "=0.31.5", features = ["binstart"] }
+# esp-idf-svc = { version = "=0.41.4", features = ["experimental", "alloc"] }
+# esp32-c3-dkc02-bsc = { path = "/home/nnyn/ghq/github.com/ferrous-systems/espressif-trainings/common/lib/esp32-c3-dkc02-bsc" }
+esp-idf-svc = { version = "0.45.0", features = ["experimental"] }
+esp-idf-sys = { version = "0.32.1", features = ["binstart"] }
+serde = { version = "1.0.152", features = ["derive"] }
+serde_json = "1.0.91"
+smart-leds = "0.3.0"
+smart-leds-trait = "0.2.1"
+ws2812-esp32-rmt-driver = "0.5.0"
 
 
 [build-dependencies]
-embuild = "0.30.4"
+embuild = "0.30"
+anyhow = "1"
+
+[package.metadata.esp-idf-sys]
+esp_idf_tools_install_dir = "global"
