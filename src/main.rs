@@ -1,6 +1,7 @@
 use esp_backtrace as _;
 use esp_idf_hal::prelude::Peripherals;
 use esp_idf_sys;
+use std::time::Duration;
 
 use embedded_svc::{
     http::{client::Client as HttpClient, Method, Status},

@@ -20,4 +20,4 @@ esac
 export ESP_ARCH=riscv32imc-esp-espidf
 
 # web-flash --chip esp32c3 target/${ESP_ARCH}/${BUILD_MODE}/air-quality-monitor-2
-espflash flash -p /dev/ttyUSB0 --monitor target/${ESP_ARCH}/${BUILD_MODE}/try-rust-esp32c3-network
+espflash flash -p /dev/tty.usbmodem101 --monitor target/${ESP_ARCH}/${BUILD_MODE}/try-rust-esp32c3-network
