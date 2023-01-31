@@ -43,11 +43,16 @@ impl<'a> WiFiConn<'a> {
         self.wifi_driver.start().unwrap();
         self.wifi_driver.connect().unwrap();
 
+        sleep(Duration::new(1, 0));
+
         while !self.wifi_driver.is_connected().unwrap() {
             let config = self.wifi_driver.get_configuration().unwrap();
             println!("Waiting for station {:?}", config);
+            sleep(Duration::from_secs(1));
         }
+
         sleep(Duration::new(1, 0));
+
         println!(
             "IP info: {:?} {:?}",
             self.wifi_driver.sta_netif().get_ip_info().unwrap(),

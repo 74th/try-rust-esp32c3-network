@@ -75,7 +75,7 @@ fn post_request(client: &mut HttpClient<EspHttpConnection>) -> anyhow::Result<()
         ("connection", "close"),
         ("content-length", &*content_length_header),
     ];
-    let url = "http://example.org/";
+    let url = "http://192.168.1.182:30500/api/echo";
 
     // Send request
     let mut request = client.post(&url, &headers)?;
