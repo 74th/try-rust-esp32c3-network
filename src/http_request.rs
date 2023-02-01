@@ -26,28 +26,36 @@ impl Data {
     }
 }
 
-pub fn main() -> anyhow::Result<()> {
-    // Create HTTP(S) client
-    let mut client = HttpClient::wrap(EspHttpConnection::new(&HttpConfiguration {
-        crt_bundle_attach: Some(esp_idf_sys::esp_crt_bundle_attach), // Needed for HTTPS support
-        ..Default::default()
-    })?);
+fn setup_client() -> HttpClient<EspHttpConnection> {
+    HttpClient::wrap(
+        EspHttpConnection::new(&HttpConfiguration {
+            crt_bundle_attach: Some(esp_idf_sys::esp_crt_bundle_attach), // Needed for HTTPS support
+            ..Default::default()
+        })
+        .unwrap(),
+    )
+}
 
+pub fn main() -> anyhow::Result<()> {
     // GET
-    get_request(&mut client)?;
+    get_request()?;
+    get_request()?;
+    get_request()?;
+    get_request()?;
 
     // POST
-    post_request(&mut client)?;
+    post_request()?;
 
     // POST JSON
-    post_json_request(&mut client)?;
+    post_json_request()?;
 
     Ok(())
 }
 
 /// Send a HTTP GET request.
 /// copy of https://github.com/esp-rs/esp-idf-svc/blob/master/examples/http_request.rs
-fn get_request(client: &mut HttpClient<EspHttpConnection>) -> anyhow::Result<()> {
+fn get_request() -> anyhow::Result<()> {
+    let mut client = setup_client();
     // Prepare headers and URL
     let headers = [("accept", "text/plain"), ("connection", "close")];
     let url = "http://ifconfig.net/";
@@ -79,12 +87,15 @@ fn get_request(client: &mut HttpClient<EspHttpConnection>) -> anyhow::Result<()>
     // Drain the remaining response bytes
     while body.read(&mut buf)? > 0 {}
 
+    client.release();
+
     Ok(())
 }
 
 /// Send a HTTP POST request.
 /// copy of https://github.com/esp-rs/esp-idf-svc/blob/master/examples/http_request.rs
-fn post_request(client: &mut HttpClient<EspHttpConnection>) -> anyhow::Result<()> {
+fn post_request() -> anyhow::Result<()> {
+    let mut client = setup_client();
     // Prepare payload
     let payload = b"Hello world!";
 
@@ -125,10 +136,14 @@ fn post_request(client: &mut HttpClient<EspHttpConnection>) -> anyhow::Result<()
     // Drain the remaining response bytes
     while body.read(&mut buf)? > 0 {}
 
+    client.release();
+
     Ok(())
 }
 
-fn post_json_request(client: &mut HttpClient<EspHttpConnection>) -> anyhow::Result<()> {
+fn post_json_request() -> anyhow::Result<()> {
+    let mut client = setup_client();
+
     let data = Data {
         timestamp: "2021-01-01 00:00:00".to_string(),
         co2_mhz19c: 1000,
@@ -179,6 +194,8 @@ fn post_json_request(client: &mut HttpClient<EspHttpConnection>) -> anyhow::Resu
 
     // Drain the remaining response bytes
     while body.read(&mut buf)? > 0 {}
+
+    client.release();
 
     Ok(())
 }

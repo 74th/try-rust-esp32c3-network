@@ -23,7 +23,7 @@ export ESP_ARCH=riscv32imc-esp-espidf
 # espflash flash --monitor target/${ESP_ARCH}/${BUILD_MODE}/try-rust-esp32c3-network /dev/tty.usbmodem101
 
 # Mac USB
-espflash /dev/tty.usbmodem101 --monitor target/${ESP_ARCH}/${BUILD_MODE}/try-rust-esp32c3-network
+espflash /dev/tty.usbmodem1101 --monitor target/${ESP_ARCH}/${BUILD_MODE}/try-rust-esp32c3-network
 
 # Mac Serial
 # espflash /dev/tty.usbserial-10 --monitor target/${ESP_ARCH}/${BUILD_MODE}/try-rust-esp32c3-network
