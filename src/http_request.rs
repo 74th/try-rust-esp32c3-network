@@ -46,6 +46,7 @@ pub fn main() -> anyhow::Result<()> {
 }
 
 /// Send a HTTP GET request.
+/// copy of https://github.com/esp-rs/esp-idf-svc/blob/master/examples/http_request.rs
 fn get_request(client: &mut HttpClient<EspHttpConnection>) -> anyhow::Result<()> {
     // Prepare headers and URL
     let headers = [("accept", "text/plain"), ("connection", "close")];
@@ -82,6 +83,7 @@ fn get_request(client: &mut HttpClient<EspHttpConnection>) -> anyhow::Result<()>
 }
 
 /// Send a HTTP POST request.
+/// copy of https://github.com/esp-rs/esp-idf-svc/blob/master/examples/http_request.rs
 fn post_request(client: &mut HttpClient<EspHttpConnection>) -> anyhow::Result<()> {
     // Prepare payload
     let payload = b"Hello world!";
