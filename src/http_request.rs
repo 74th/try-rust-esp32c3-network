@@ -27,25 +27,26 @@ impl Data {
 }
 
 pub fn main() -> anyhow::Result<()> {
-    // GET
-    get_request()?;
-
-    // POST
-    post_request()?;
-
-    // POST
-    post_json_request()?;
-
-    Ok(())
-}
-
-/// Send a HTTP GET request.
-fn get_request() -> anyhow::Result<()> {
     // Create HTTP(S) client
     let mut client = HttpClient::wrap(EspHttpConnection::new(&HttpConfiguration {
         crt_bundle_attach: Some(esp_idf_sys::esp_crt_bundle_attach), // Needed for HTTPS support
         ..Default::default()
     })?);
+
+    // GET
+    get_request(&mut client)?;
+
+    // POST
+    post_request(&mut client)?;
+
+    // POST JSON
+    post_json_request(&mut client)?;
+
+    Ok(())
+}
+
+/// Send a HTTP GET request.
+fn get_request(client: &mut HttpClient<EspHttpConnection>) -> anyhow::Result<()> {
     // Prepare headers and URL
     let headers = [("accept", "text/plain"), ("connection", "close")];
     let url = "http://ifconfig.net/";
@@ -81,12 +82,7 @@ fn get_request() -> anyhow::Result<()> {
 }
 
 /// Send a HTTP POST request.
-fn post_request() -> anyhow::Result<()> {
-    // Create HTTP(S) client
-    let mut client = HttpClient::wrap(EspHttpConnection::new(&HttpConfiguration {
-        crt_bundle_attach: Some(esp_idf_sys::esp_crt_bundle_attach), // Needed for HTTPS support
-        ..Default::default()
-    })?);
+fn post_request(client: &mut HttpClient<EspHttpConnection>) -> anyhow::Result<()> {
     // Prepare payload
     let payload = b"Hello world!";
 
@@ -130,12 +126,7 @@ fn post_request() -> anyhow::Result<()> {
     Ok(())
 }
 
-fn post_json_request() -> anyhow::Result<()> {
-    // Create HTTP(S) client
-    let mut client = HttpClient::wrap(EspHttpConnection::new(&HttpConfiguration {
-        crt_bundle_attach: Some(esp_idf_sys::esp_crt_bundle_attach), // Needed for HTTPS support
-        ..Default::default()
-    })?);
+fn post_json_request(client: &mut HttpClient<EspHttpConnection>) -> anyhow::Result<()> {
     let data = Data {
         timestamp: "2021-01-01 00:00:00".to_string(),
         co2_mhz19c: 1000,
