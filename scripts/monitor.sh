@@ -1,2 +1,3 @@
 #!/usr/bin/env bash
-espflash monitor -p /dev/ttyUSB0
+# espflash serial-monitor /dev/tty.usbserial-10
+espflash serial-monitor

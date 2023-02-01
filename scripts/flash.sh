@@ -21,4 +21,9 @@ export ESP_ARCH=riscv32imc-esp-espidf
 
 # web-flash --chip esp32c3 target/${ESP_ARCH}/${BUILD_MODE}/air-quality-monitor-2
 # espflash flash --monitor target/${ESP_ARCH}/${BUILD_MODE}/try-rust-esp32c3-network /dev/tty.usbmodem101
-espflash --flash-freq 80M /dev/tty.usbserial-10 --monitor target/${ESP_ARCH}/${BUILD_MODE}/try-rust-esp32c3-network
+
+# Mac USB
+espflash /dev/tty.usbmodem101 --monitor target/${ESP_ARCH}/${BUILD_MODE}/try-rust-esp32c3-network
+
+# Mac Serial
+# espflash /dev/tty.usbserial-10 --monitor target/${ESP_ARCH}/${BUILD_MODE}/try-rust-esp32c3-network
